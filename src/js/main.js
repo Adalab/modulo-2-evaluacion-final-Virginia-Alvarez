@@ -14,12 +14,35 @@ let favouritesCharacters = [];
 
 // DECLARACIÓN DE FUNCIONES
 
+//función añadir a fav
+
+function addToFavourite(event){
+    event.preventDefault();
+    const id = parseInt(event.currentTarget.dataset.id);
+    const selectedCharacter = characters.find((character) => character.char_id === id);
+    favouritesCharacters.push(selectedCharacter);
+    localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
+    drawCharacter(selectedCharacter, favouritesList, true);
+}
+
+function removeFromFavourite(event){
+    event.preventDefault();
+    const id = parseInt(event.currentTarget.dataset.id);
+    favouritesCharacters = favouritesCharacters.filter((character) => character.char_id !== id);
+    localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
+    event.currentTarget.remove();
+}
+
 //función renderizar
-function drawCharacter(character){
-    //Aquí código para pintar
+function drawCharacter(character, list, isFavourite){
+    //Le paso dos parámetros (personaje, lista donde va a ir guardada), para poder reutilizarla en fav y en la busqueda.
     const liElement = document.createElement('li');
     liElement.classList.add('list');
     liElement.classList.add('jsCharacter');
+    if(isFavourite){
+        liElement.classList.add('favourite');
+    }
+    liElement.dataset.id = character.char_id; //Añado id del personaje en el atributo data-id
     
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src',character.img);
@@ -39,9 +62,13 @@ function drawCharacter(character){
     paragraph2Element.classList.add('list-paragraph');
     liElement.appendChild(paragraph2Element);
 
-    // liElement.addEventListener('click', addToFavourite)
+    if(!isFavourite) {
+        liElement.addEventListener('click', addToFavourite);
+    } else {
+        liElement.addEventListener('click', removeFromFavourite);
+    }
 
-    charactersList.appendChild(liElement);
+    list.appendChild(liElement);
 
 
 
@@ -72,7 +99,7 @@ function fetchFilteredCharacters(name){
     .then((response) => response.json())
     .then((filteredCharacters) => {
             for(const character of filteredCharacters){
-                drawCharacter(character);
+                drawCharacter(character, charactersList,false);
             }
     }); 
 }
@@ -82,19 +109,31 @@ function fetchAllCharacters(){
     .then((response) => response.json())
     .then((jsonData) => {
             characters = jsonData;
-            localStorage.setItem('characters', characters)
+            localStorage.setItem('characters', JSON.stringify(characters));
             for(const character of characters){
-                drawCharacter(character);
+                drawCharacter(character, charactersList, false);
             }
     }); 
 }
+
+function drawFavouritesCharacters(){
+    if(favouritesCharacters){
+        for(const character of favouritesCharacters){
+            drawCharacter(character, favouritesList, true);
+        }
+    }
+};
 
 //Eventos
 btn.addEventListener('click', filterCharacter);
 
 
 //Ejecucciones: 
-fetchAllCharacters();
+fetchAllCharacters(); //Pintamos todos los personajes
+if(localStorage.getItem('favouritesCharacters')){ //Antes de pintar los favoritos compruebo que haya en el local storage
+    favouritesCharacters = JSON.parse(localStorage.getItem('favouritesCharacters'));
+}
+drawFavouritesCharacters();
 
 
 
