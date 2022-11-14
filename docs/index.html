@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto+Slab:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <title>Evaluación final Virginia Álvarez</title>
 </head>
 <body>
@@ -16,10 +17,16 @@
                 <button class="form-button jsBtn">Search</button>
             </form>
         </fieldset>
-        <h1 class="title">Characters &hearts;</h1>     
+        <div class="titles">
+            <h1 class="jsTitleCharacters titles-characters-full-screen">Characters &hearts;</h1>
+            <h2 class="jsTitleFav titles-fav hidden">Favourites &hearts;</h2>
+        </div>
         <section class="section-list">
-            <article>
-                <ul class="characters jsCharactersList">
+            <article class="jsArticleFavourites section-list-favourites hidden">
+                <ul class="section-list-characters-all jsFavouritesList"></ul>
+            </article>
+            <article class="jsArticleCharacters section-list-characters-full-screen">
+                <ul class="section-list-characters-all jsCharactersList">
                     <!-- <li class="list jsCharacter">
                         <img src="" alt="">
                         <p>Nombre: Walter White</p> -->
@@ -37,10 +44,6 @@
                         <p>Better Call Saul Temporadas: 1,2,3</p> -->
                     <!-- </li> -->
                 </ul>
-            </article>
-            <article class="list-favourites">
-                <h2>Favourites &hearts;</h2>
-                <ul class="favourites-characters jsFavouritesList"></ul>
             </article>
         </section>  
     </main>
