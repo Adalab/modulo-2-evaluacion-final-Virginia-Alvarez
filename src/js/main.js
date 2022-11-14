@@ -1,7 +1,6 @@
-'use strict';
+'use strict'
 // 1-DECLARACIÓN DE VARIABLES
 //queryselector
-    
 const charactersList = document.querySelector('.jsCharactersList');
 const character = document.querySelector('.jsCharacter');
 const input = document.querySelector('.jsInput');
@@ -64,7 +63,7 @@ function drawCharacter(character, list, isFavourite){
     
     const paragraph2Element = document.createElement('p');
     const paragraph2Name = document.createTextNode(character.status);
-    paragraph2Element.appendChild(paragraph2Name)
+    paragraph2Element.appendChild(paragraph2Name);
     paragraph2Element.classList.add('character-paragraph');
     liElement.appendChild(paragraph2Element);
 
@@ -75,7 +74,7 @@ function drawCharacter(character, list, isFavourite){
         liElement.addEventListener('click', addToFavourite);
     }
     list.appendChild(liElement);// a la lista que yo le digo, pintame el li
-};
+}
 
 //4-función filtrar por búsqueda
 function filterCharacter (event){
@@ -105,7 +104,7 @@ function fetchAllCharacters(){
                 drawCharacter(character, charactersList, false);
             }
     }); 
-};
+}
 //5-funcion pintar fav
 function drawFavouritesCharacters(){
     favouritesList.innerHTML = '';
