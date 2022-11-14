@@ -11,15 +11,16 @@ const favouritesList= document.querySelector('.jsFavouritesList');
 const titleCharacters= document.querySelector('.jsTitleCharacters');
 const titleFavourites= document.querySelector('.jsTitleFav');
 const articleCharacters= document.querySelector('.jsArticleCharacters');
-const articleFavourites= document.querySelector('.jsFavouritesList');
+const articleFavourites= document.querySelector('.jsArticleFavourites');
 
 //Variables globales 
+
 let characters = [];
 let favouritesCharacters = [];
 
 // DECLARACIÓN DE FUNCIONES
 
-//función añadir a fav
+//funciónes fav
 
 function addToFavourite(event){
     event.preventDefault();
@@ -28,7 +29,7 @@ function addToFavourite(event){
     if(!favouritesCharacters.find((character) => character.char_id === id)){ //Para evitar que se me añada varias veces el mismo favorito
         favouritesCharacters.push(selectedCharacter);
         localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
-        drawCharacter(selectedCharacter, favouritesList, true);
+        drawFavouritesCharacters();
     } 
 }
 
@@ -37,10 +38,10 @@ function removeFromFavourite(event){
     const id = parseInt(event.currentTarget.dataset.id);
     favouritesCharacters = favouritesCharacters.filter((character) => character.char_id !== id);
     localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
-    event.currentTarget.remove();
+    drawFavouritesCharacters();
 }
 
-//3-función renderizar
+//3-función pintar un personaje
 function drawCharacter(character, list, isFavourite){
     //sólo me pinta un personaje. en la función fetch con el bucle pinto todos.
     //Le paso parámetros (personaje, lista donde va a ir guardada,si es fav), para poder reutilizarla en fav y en la busqueda.
@@ -67,35 +68,24 @@ function drawCharacter(character, list, isFavourite){
     paragraph2Element.classList.add('character-paragraph');
     liElement.appendChild(paragraph2Element);
 
-    if(isFavourite){
+    if(isFavourite){  
         liElement.classList.add('favourite');
         liElement.addEventListener('click', removeFromFavourite);
     } else {
         liElement.addEventListener('click', addToFavourite);
     }
     list.appendChild(liElement);// a la lista que yo le digo, pintame el li
-
-//     charactersList.innerHTML += `<li class="list jsCharacter">
-//     <img class="list-img" src="${character.img}" alt="Foto ${character.name}">
-//     <p class="list-paragraph">${character.name}</p>
-//     <p class="list-paragraph">${character.status}</p>
-// </li>`  
 };
 
-//4-función filtrar
+//4-función filtrar por búsqueda
 function filterCharacter (event){
     event.preventDefault();
     const nameSearch= input.value;
     charactersList.innerHTML = '';
-    // const filteredCharacters = characters.filter((character) =>
-    // character.name.toLowerCase().includes(nameSearch.toLowerCase()));
-    // console.log(filterCharacter);
-    // for(const character of filteredCharacters){
-    //     drawCharacter(character);
-    // }
     fetchFilteredCharacters(nameSearch);
 }
-//5-función filtrar por api
+
+//5-Petición filtrados
 function fetchFilteredCharacters(name){
     fetch(`https://breakingbadapi.com/api/characters?name=${name}`)
     .then((response) => response.json())
@@ -116,20 +106,35 @@ function fetchAllCharacters(){
             }
     }); 
 };
-
+//5-funcion pintar fav
 function drawFavouritesCharacters(){
+    favouritesList.innerHTML = '';
     if(favouritesCharacters.length){
+        titleCharacters.classList.remove('titles-characters-full-screen');
+        titleCharacters.classList.add('titles-characters');
+        titleFavourites.classList.remove('hidden');
+        articleCharacters.classList.remove('section-list-characters-full-screen');
+        articleCharacters.classList.add('section-list-characters');
+        articleFavourites.classList.remove('hidden');
         for(const character of favouritesCharacters){
             drawCharacter(character, favouritesList, true);
         }
-    }   
-};
+    } else {
+        titleCharacters.classList.add('titles-characters-full-screen');
+        titleCharacters.classList.remove('titles-characters');
+        titleFavourites.classList.add('hidden');
+        articleCharacters.classList.add('section-list-characters-full-screen');
+        articleCharacters.classList.remove('section-list-characters');
+        articleFavourites.classList.add('hidden');
+    }
+}
 
 //Eventos
 btn.addEventListener('click', filterCharacter);
 
 
 //Ejecucciones: 
+
 fetchAllCharacters(); //Pintamos todos los personajes
 if(localStorage.getItem('favouritesCharacters')){ //Antes de pintar los favoritos compruebo que haya en el local storage
     favouritesCharacters = JSON.parse(localStorage.getItem('favouritesCharacters'));

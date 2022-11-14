@@ -23,12 +23,14 @@ body{
     position: relative;
     z-index: 3;
     top: -50px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     &-input{
         width: 700px;
         height: 40px;
         border-radius: 4px;
         border:solid $almostBrown;
         outline: none;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     }
     &-button{
         width: 100px;
@@ -38,6 +40,7 @@ body{
         color: $white;
         font-size: 15px;
         cursor: grab;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     }
 }
 .heart{
@@ -49,9 +52,7 @@ body{
     font-size: 30px;
     width: 100%;
     margin-bottom: 30px;
-    // text-transform: uppercase;
     color: $colorThird;
-
     &-characters{
         grid-column: 2/4;
         order:2;
@@ -79,10 +80,11 @@ body{
     grid-template-columns: 1fr 1fr 1fr;
     &-characters{
         grid-column: 2/4;
+        &-full-screen{
+            grid-column: 1/4;
+        }
     }
-    &-characters-full-screen{
-        grid-column: 1/4;
-    }
+    
     &-characters-all{
         display: flex;
         flex-direction: row;
@@ -107,7 +109,8 @@ body{
     align-items: center;
     background-color: $creamColor;
     gap:10px;
-    border-radius: 20px;    
+    border-radius: 20px;   
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; 
     &-img{
         width: 150px;
         height: 200px;
