@@ -46,6 +46,14 @@ body{
 .heart{
     color: $colornew;
 }
+.trash{
+    background-image: url('../images/trash.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 30px;
+    width: 30px;
+
+}
 .titles{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

@@ -6,6 +6,7 @@ const character = document.querySelector('.jsCharacter');
 const input = document.querySelector('.jsInput');
 const btn = document.querySelector('.jsBtn');
 const favouritesList= document.querySelector('.jsFavouritesList');
+const trash = document.querySelector('.jsTrash');
 
 const titleCharacters= document.querySelector('.jsTitleCharacters');
 const titleFavourites= document.querySelector('.jsTitleFav');
@@ -14,7 +15,7 @@ const articleFavourites= document.querySelector('.jsArticleFavourites');
 
 //Variables globales 
 
-let characters = [];
+let characters = [];             
 let favouritesCharacters = [];
 
 // DECLARACIÓN DE FUNCIONES
@@ -37,6 +38,14 @@ function removeFromFavourite(event){
     const id = parseInt(event.currentTarget.dataset.id);
     favouritesCharacters = favouritesCharacters.filter((character) => character.char_id !== id);
     localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
+    drawFavouritesCharacters();
+}
+//bonus: borrar todos los favoritos 
+
+function favToTrash(event){
+    event.preventDefault();
+    favouritesCharacters= [];
+    localStorage.removeItem('favouritesCharacters')
     drawFavouritesCharacters();
 }
 
@@ -130,6 +139,7 @@ function drawFavouritesCharacters(){
 
 //Eventos
 btn.addEventListener('click', filterCharacter);
+trash.addEventListener('click',favToTrash);
 
 
 //Ejecucciones: 
