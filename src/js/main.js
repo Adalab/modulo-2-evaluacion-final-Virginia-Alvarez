@@ -36,9 +36,8 @@ function addToFavourite(event){
 function removeFromFavourite(event){
     event.preventDefault();
     const id = parseInt(event.currentTarget.dataset.id);
-    favouritesCharacters = favouritesCharacters.filter((character) => character.char_id !== id);
-    localStorage.setItem('favouritesCharacters', JSON.stringify(favouritesCharacters));
-    drawFavouritesCharacters();
+    favouritesCharacters = favouritesCharacters.find((character) => character.char_id === id);
+    console.log(favouritesCharacters.name);
 }
 //bonus: borrar todos los favoritos 
 
@@ -70,6 +69,12 @@ function drawCharacter(character, list, isFavourite){
     paragraph1Element.classList.add('character-paragraph');
     liElement.appendChild(paragraph1Element);
     
+    const paragraphBiElement = document.createElement('p');
+    const paragraphBirElement = document.createTextNode(character.birthday);
+    paragraphBiElement.appendChild(paragraphBirElement);
+    paragraphBiElement.classList.add('character-paragraph');
+    liElement.appendChild(paragraphBiElement);
+
     const paragraph2Element = document.createElement('p');
     const paragraph2Name = document.createTextNode(character.status);
     paragraph2Element.appendChild(paragraph2Name);
